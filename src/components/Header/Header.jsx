@@ -29,6 +29,19 @@ function Header() {
     dispatch(setSearchTerm(debouncedValue));
   }, [debouncedValue, dispatch]);
 
+  // If something outside this input clears the redux search term (e.g. the
+  // "Reset filters" action on the empty-results state), mirror that back
+  // into the visible input — otherwise the debounce would silently
+  // re-dispatch the stale local value a moment later. Intentionally only
+  // reacts to reduxSearchTerm changing (not inputValue), so it doesn't
+  // fight with normal typing.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (reduxSearchTerm === '' && inputValue !== '') {
+      setInputValue('');
+    }
+  }, [reduxSearchTerm]);
+
   return (
     <header className="site-header">
       <div className="container site-header__inner">

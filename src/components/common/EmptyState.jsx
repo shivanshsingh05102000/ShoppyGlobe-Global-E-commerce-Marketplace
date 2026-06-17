@@ -9,7 +9,7 @@ import './EmptyState.css';
  * emptiness as something the user can act on, per the design guidance:
  * "An empty screen is an invitation to act."
  */
-function EmptyState({ icon = '📦', title, message, actionLabel, actionTo }) {
+function EmptyState({ icon = '📦', title, message, actionLabel, actionTo, onAction }) {
   return (
     <div className="empty-state">
       <span className="empty-state__icon" aria-hidden="true">{icon}</span>
@@ -19,6 +19,11 @@ function EmptyState({ icon = '📦', title, message, actionLabel, actionTo }) {
         <Link to={actionTo} className="btn btn--primary">
           {actionLabel}
         </Link>
+      )}
+      {actionLabel && onAction && !actionTo && (
+        <button type="button" className="btn btn--primary" onClick={onAction}>
+          {actionLabel}
+        </button>
       )}
     </div>
   );
@@ -30,6 +35,7 @@ EmptyState.propTypes = {
   message: PropTypes.string,
   actionLabel: PropTypes.string,
   actionTo: PropTypes.string,
+  onAction: PropTypes.func,
 };
 
 export default EmptyState;
