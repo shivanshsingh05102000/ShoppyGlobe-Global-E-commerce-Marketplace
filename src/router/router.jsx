@@ -1,3 +1,8 @@
+/* eslint-disable react-refresh/only-export-components --
+   This file exports a router configuration object, not a React component.
+   react-refresh/only-export-components exists to keep Fast Refresh
+   working for component files; it doesn't apply to a route table whose
+   only JSX usage is `element: <Page />` inside plain config objects. */
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';

@@ -24,8 +24,8 @@ const REDIRECT_DELAY_MS = 3500;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EXPIRY_PATTERN = /^(0[1-9]|1[0-2])\/\d{2}$/;
 
-/** Validate a single field given the full form snapshot (some checks need siblings, e.g. expiry vs. today). */
-function validateField(name, value, formData) {
+/** Validate a single field by name/value. */
+function validateField(name, value) {
   const trimmed = (value ?? '').trim();
 
   switch (name) {
@@ -101,7 +101,7 @@ function validateField(name, value, formData) {
 function validateAll(formData) {
   const errors = {};
   Object.keys(formData).forEach((name) => {
-    const message = validateField(name, formData[name], formData);
+    const message = validateField(name, formData[name]);
     if (message) errors[name] = message;
   });
   return errors;
@@ -191,14 +191,14 @@ function Checkout() {
     setFormData(nextFormData);
 
     if (touched[name]) {
-      setErrors((prev) => ({ ...prev, [name]: validateField(name, nextValue, nextFormData) }));
+      setErrors((prev) => ({ ...prev, [name]: validateField(name, nextValue) }));
     }
   };
 
   const handleBlur = (e) => {
     const { name, value } = e.target;
     setTouched((prev) => ({ ...prev, [name]: true }));
-    setErrors((prev) => ({ ...prev, [name]: validateField(name, value, formData) }));
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   };
 
   const handleSubmit = (e) => {

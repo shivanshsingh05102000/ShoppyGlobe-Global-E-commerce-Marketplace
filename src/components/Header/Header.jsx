@@ -23,6 +23,7 @@ function Header() {
   const reduxSearchTerm = useSelector(selectSearchTerm);
 
   const [inputValue, setInputValue] = useState(reduxSearchTerm);
+  const [prevReduxSearchTerm, setPrevReduxSearchTerm] = useState(reduxSearchTerm);
   const debouncedValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
@@ -32,15 +33,20 @@ function Header() {
   // If something outside this input clears the redux search term (e.g. the
   // "Reset filters" action on the empty-results state), mirror that back
   // into the visible input — otherwise the debounce would silently
-  // re-dispatch the stale local value a moment later. Intentionally only
-  // reacts to reduxSearchTerm changing (not inputValue), so it doesn't
-  // fight with normal typing.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
+  // re-dispatch the stale local value a moment later.
+  //
+  // This is done during render (React's documented pattern for "adjusting
+  // state when a prop/external value changes"), not inside a useEffect:
+  // comparing against a tracked "previous value" lets us update state
+  // synchronously in response to a change without an extra commit+effect
+  // round trip, and without ever needing an unconditional setState call
+  // inside an effect body.
+  if (reduxSearchTerm !== prevReduxSearchTerm) {
+    setPrevReduxSearchTerm(reduxSearchTerm);
     if (reduxSearchTerm === '' && inputValue !== '') {
       setInputValue('');
     }
-  }, [reduxSearchTerm]);
+  }
 
   return (
     <header className="site-header">

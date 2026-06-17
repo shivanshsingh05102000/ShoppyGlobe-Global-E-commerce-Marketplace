@@ -19,11 +19,7 @@ export function useProductDetail(productId) {
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
-    if (!productId) {
-      setLoading(false);
-      setError('No product was specified.');
-      return;
-    }
+    if (!productId) return; // nothing to fetch — handled by the derived return value below
 
     const controller = new AbortController();
 
@@ -60,6 +56,13 @@ export function useProductDetail(productId) {
   }, [productId, reloadToken]);
 
   const refetch = useCallback(() => setReloadToken((t) => t + 1), []);
+
+  // A missing productId is a caller error (e.g. hook used without a route
+  // param), not something to fetch — short-circuit the returned values
+  // directly rather than driving them through setState inside the effect.
+  if (!productId) {
+    return { product: null, loading: false, error: 'No product was specified.', refetch };
+  }
 
   return { product, loading, error, refetch };
 }
