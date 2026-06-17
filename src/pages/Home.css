@@ -1,0 +1,34 @@
+.home-banner {
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.home-banner__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: var(--space-2);
+}
+
+.home-banner__title {
+  color: #fff;
+  font-size: var(--text-2xl);
+  max-width: 28ch;
+}
+
+.home-banner__subtitle {
+  margin-top: var(--space-3);
+  max-width: 48ch;
+  opacity: 0.9;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 600px) {
+  .home-banner { padding: var(--space-5) var(--space-4); }
+  .home-banner__title { font-size: var(--text-xl); }
+}
