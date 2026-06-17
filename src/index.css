@@ -183,8 +183,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--color-surface);
   border: 1.5px solid var(--color-ink);
   padding: 0.18em 0.65em 0.18em 0.9em;
-  border-radius: 3px 8px 8px 3px;
-  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+  border-radius: 8px 8px 8px 8px;
   padding-left: 1.1em;
 }
 
