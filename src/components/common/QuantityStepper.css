@@ -1,0 +1,34 @@
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.qty-stepper__btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--color-teal);
+  transition: background 0.15s ease;
+}
+
+.qty-stepper__btn:hover:not(:disabled) { background: var(--color-teal-tint); }
+.qty-stepper__btn:disabled { color: var(--color-ink-faint); cursor: not-allowed; }
+
+.qty-stepper__value {
+  min-width: 2.25rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
